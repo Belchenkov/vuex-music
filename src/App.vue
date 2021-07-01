@@ -405,5 +405,8 @@
 </template>
 
 <style lang="scss">
-
+  @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap');
+  #app {
+    font-family: 'Titillium Web', sans-serif;
+  }
 </style>
