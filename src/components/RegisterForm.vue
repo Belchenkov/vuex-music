@@ -82,7 +82,7 @@
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition
                   duration-500 focus:outline-none focus:border-black rounded">
         <option value="USA">USA</option>
-        <option value="Mexico">Mexico</option>
+        <option value="Russia">Russia</option>
         <option value="Germany">Germany</option>
         <option value="Antarctica">Antarctica</option>
       </vee-field>
@@ -110,8 +110,6 @@
 </template>
 
 <script>
-import { auth, userrCollection } from '../includes/firebase';
-
 export default {
   name: 'RegisterForm',
   data() {
@@ -135,36 +133,14 @@ export default {
     };
   },
   methods: {
-    async register({
-      email,
-      password,
-      age,
-      name,
-      country,
-    }) {
+    async register(data) {
       this.regShowAlert = true;
       this.regInSubmission = true;
       this.regAlertVariant = 'bg-blue-500';
       this.regAlertMsg = 'Please wait! Your account is being created';
 
-      let userCred = null;
       try {
-        userCred = await auth.createUserWithEmailAndPassword(email, password);
-      } catch (error) {
-        console.log(error);
-        this.regInSubmission = false;
-        this.regAlertVariant = 'bg-red-500';
-        this.regAlertMsg = 'An unexpected error occured. Please try again later.';
-        return;
-      }
-
-      try {
-        await userrCollection.add({
-          name,
-          email,
-          age,
-          country,
-        });
+        await this.$store.dispatch('register', data);
       } catch (error) {
         console.log(error);
         this.regInSubmission = false;
@@ -175,7 +151,6 @@ export default {
 
       this.regAlertVariant = 'bg-green-500';
       this.regAlertMsg = 'Success! Your account has been created.';
-      console.log(userCred);
     },
   },
 };
