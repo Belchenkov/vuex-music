@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import firebase from '../includes/firebase';
+import { auth, userrCollection } from '../includes/firebase';
 
 export default {
   name: 'RegisterForm',
@@ -135,7 +135,13 @@ export default {
     };
   },
   methods: {
-    async register({ email, password }) {
+    async register({
+      email,
+      password,
+      age,
+      name,
+      country,
+    }) {
       this.regShowAlert = true;
       this.regInSubmission = true;
       this.regAlertVariant = 'bg-blue-500';
@@ -143,13 +149,30 @@ export default {
 
       let userCred = null;
       try {
-        userCred = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        userCred = await auth.createUserWithEmailAndPassword(email, password);
       } catch (error) {
+        console.log(error);
         this.regInSubmission = false;
         this.regAlertVariant = 'bg-red-500';
         this.regAlertMsg = 'An unexpected error occured. Please try again later.';
         return;
       }
+
+      try {
+        await userrCollection.add({
+          name,
+          email,
+          age,
+          country,
+        });
+      } catch (error) {
+        console.log(error);
+        this.regInSubmission = false;
+        this.regAlertVariant = 'bg-red-500';
+        this.regAlertMsg = 'An unexpected error occured. Please try again later.';
+        return;
+      }
+
       this.regAlertVariant = 'bg-green-500';
       this.regAlertMsg = 'Success! Your account has been created.';
       console.log(userCred);
