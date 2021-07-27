@@ -43,14 +43,24 @@
 import {
   mapMutations,
   mapState,
-  mapActions,
 } from 'vuex';
 
 export default {
   name: 'Header',
   methods: {
     ...mapMutations(['toggleAuthModal']),
-    ...mapActions(['signOut']),
+    signOut() {
+      this.$store.dispatch('signOut');
+      if (
+        this.$route.meta.requiresAuth === 'manage'
+        || this.$route.name === 'account'
+        || this.$route.name === 'billing'
+        || this.$route.name === 'taxes'
+        || this.$route.name === 'edit'
+      ) {
+        this.$router.push({ name: 'home' });
+      }
+    },
   },
   computed: {
     ...mapState([
