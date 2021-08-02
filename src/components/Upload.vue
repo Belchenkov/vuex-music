@@ -18,12 +18,12 @@
           @dragover.prevent.stop="isDragOver = true"
           @dragenter.prevent.stop="isDragOver = true"
           @dragleave.prevent.stop="isDragOver = false"
-          @drop.prevent.stop="upload"
+          @drop.prevent.stop="upload($event)"
         >
           <h5>Drop your files here</h5>
         </div>
         <hr class="my-6" />
-        <!-- Progess Bars -->
+        <!-- Progress Bars -->
         <div class="mb-4">
           <!-- File Name -->
           <div class="font-bold text-sm">Just another song.mp3</div>
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { storage } from '@/includes/firebase';
+
 export default {
   name: 'Upload',
   data() {
@@ -58,8 +60,21 @@ export default {
     };
   },
   methods: {
-    upload() {
+    upload($event) {
       this.isDragOver = false;
+
+      const { files } = $event.dataTransfer;
+      files.forEach((file) => {
+        if (file.type !== 'audio/mpeg') {
+          return false;
+        }
+
+        const storageRef = storage.ref();
+        const songsRef = storageRef.child(`songs/${file.name}`);
+        songsRef.put(file);
+
+        return true;
+      });
     },
   },
 };

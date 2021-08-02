@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { auth, userrCollection } from '../includes/firebase';
+import { auth, usersCollection } from '../includes/firebase';
 
 export default createStore({
   state: {
@@ -27,7 +27,7 @@ export default createStore({
     }) {
       const userCred = await auth.createUserWithEmailAndPassword(email, password);
 
-      await userrCollection
+      await usersCollection
         .doc(userCred.user.uid)
         .set({
           name,
