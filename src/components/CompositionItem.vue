@@ -13,20 +13,32 @@
       </button>
     </div>
     <div v-show="showForm">
-      <form>
+      <vee-form
+          @submit="edit"
+          :validation-schema="schema"
+          :initial-values="song"
+      >
         <div class="mb-3">
-          <label class="inline-block mb-2">{{ song.title }}</label>
-          <input type="text"
+          <label class="inline-block mb-2">Song Title</label>
+          <vee-field
+                 name="modifiedName"
+                 type="text"
                  class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300
                         transition duration-500 focus:outline-none focus:border-black rounded"
-                 placeholder="Enter Song Title" />
+                 placeholder="Enter Song Title"
+          />
+          <ErrorMessage class="text-red-600" name="modifiedName" />
         </div>
         <div class="mb-3">
           <label class="inline-block mb-2">Genre</label>
-          <input type="text"
-                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300
+          <vee-field
+                name="genre"
+                type="text"
+                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300
                         transition duration-500 focus:outline-none focus:border-black rounded"
-                 placeholder="Enter Genre" />
+                 placeholder="Enter Genre"
+          />
+          <ErrorMessage class="text-red-600" name="genre" />
         </div>
         <div class="flex justify-between">
           <button type="submit" class="py-1.5 px-3 mr-3 rounded text-white bg-green-600">
@@ -36,7 +48,7 @@
             Go Back
           </button>
         </div>
-      </form>
+      </vee-form>
     </div>
   </div>
 </template>
@@ -53,7 +65,16 @@ export default {
   data() {
     return {
       showForm: false,
+      schema: {
+        modifiedName: 'required',
+        genre: 'alpha_spaces',
+      },
     };
+  },
+  methods: {
+    edit() {
+      console.log('edit');
+    },
   },
 };
 </script>
