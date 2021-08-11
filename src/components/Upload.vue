@@ -49,6 +49,9 @@
 import { storage, auth, songsCollection } from '@/includes/firebase';
 
 export default {
+  props: [
+    'addSong',
+  ],
   name: 'Upload',
   data() {
     return {
@@ -98,8 +101,12 @@ export default {
             genre: '',
             commentCount: 0,
           };
+
           song.url = await task.snapshot.ref.getDownloadURL();
-          await songsCollection.add(song);
+
+          const songRef = await songsCollection.add(song);
+          const songSnapshot = await songRef.get();
+          this.addSong(songSnapshot);
 
           this.uploads[uploadIndex].variant = 'bg-green-400';
           this.uploads[uploadIndex].icon = 'fas fa-check';
