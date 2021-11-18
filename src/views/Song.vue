@@ -22,7 +22,7 @@
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
-        <span class="card-title">Comments (15)</span>
+        <span class="card-title">Comments ({{ song.commentCount }})</span>
         <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
       </div>
       <div class="p-6">
@@ -171,6 +171,7 @@ export default {
       this.sort = sort === '1' || sort === '2' ? sort : '1';
       this.song = docSnapshot.data();
       await this.getComments();
+      console.log(this.song);
     }
   },
   methods: {
@@ -202,7 +203,14 @@ export default {
 
       await commentsCollection.add(comment);
 
-      this.getComments();
+      this.song.commentCount += 1;
+      await songsCollection
+        .doc(this.$route.params.id)
+        .update({
+          commentCount: this.song.commentCount,
+        });
+
+      await this.getComments();
 
       this.commentInSubmission = false;
       this.commentAlertVariant = 'bg-green-500';
