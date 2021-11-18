@@ -159,6 +159,7 @@ export default {
   },
   async created() {
     if (this.$route.params?.id) {
+      const { sort } = this.$route.query;
       const docSnapshot = await songsCollection.doc(this.$route.params.id)
         .get();
 
@@ -167,6 +168,7 @@ export default {
         return;
       }
 
+      this.sort = sort === '1' || sort === '2' ? sort : '1';
       this.song = docSnapshot.data();
       await this.getComments();
     }
@@ -207,6 +209,17 @@ export default {
       this.commentAlertMessage = 'Comment added!';
 
       resetForm();
+    },
+    watch: {
+      sort(newVal) {
+        if (newVal === this.$route.query.sort) return;
+
+        this.$router.push({
+          query: {
+            sort: newVal,
+          },
+        });
+      },
     },
   },
 };
