@@ -9,7 +9,6 @@
   <vee-form
     :validation-schema="loginSchema"
     @submit="login"
-    :initial-values="userData"
   >
     <!-- Email -->
     <div class="mb-3">
