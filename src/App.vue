@@ -2,7 +2,11 @@
   <div>
     <app-header />
 
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
 
     <app-player />
 
@@ -32,5 +36,15 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap');
   #app {
     font-family: 'Titillium Web', sans-serif;
+  }
+  .fade-enter-from {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    transition: all .3s linear;
+  }
+  .fade-leave-to {
+    transition: all .3s linear;
+    opacity: 0;
   }
 </style>
