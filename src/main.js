@@ -8,12 +8,14 @@ import { auth } from './includes/firebase';
 import Icon from './directives/icon';
 import './assets/tailwind.css';
 import './assets/css/main.css';
+import i18n from './includes/i18n';
 
 let app;
 
 auth.onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App)
+      .use(i18n)
       .use(store)
       .use(VeeValidatePlugin)
       .use(router);
