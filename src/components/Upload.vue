@@ -72,6 +72,18 @@ export default {
           return false;
         }
 
+        if (!navigator.onLine) {
+          this.uploads.push({
+            task: {},
+            current_progress: 100,
+            name: file.name,
+            variant: 'bg-red-400',
+            icon: 'fas fa-times',
+            text_class: ''
+          });
+          return false;
+        }
+
         const storageRef = storage.ref();
         const songsRef = storageRef.child(`songs/${file.name}`);
         const task = songsRef.put(file);
@@ -82,7 +94,7 @@ export default {
           name: file.name,
           variant: 'bg-blue-400',
           icon: 'fas fa-spinner fa-spin',
-          text_class: '',
+          text_class: 'text-red-4000',
         }) - 1;
 
         task.on('state_changed', (snapshot) => {
