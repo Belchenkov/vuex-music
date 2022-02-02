@@ -8,9 +8,13 @@ import i18n from './includes/i18n';
 import Icon from './directives/icon';
 import VeeValidatePlugin from './includes/validation';
 import GlobalComponents from './includes/_globals';
+import ProgressBar from './includes/progress-bar';
 import './assets/tailwind.css';
 import './assets/css/main.css';
 import './registerServiceWorker';
+import 'nprogress/nprogress.css';
+
+ProgressBar(router);
 
 let app;
 
