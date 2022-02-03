@@ -3,13 +3,18 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import VeeValidatePlugin from './includes/validation';
 import { auth } from './includes/firebase';
+import i18n from './includes/i18n';
 import Icon from './directives/icon';
+import VeeValidatePlugin from './includes/validation';
+import GlobalComponents from './includes/_globals';
+import ProgressBar from './includes/progress-bar';
 import './assets/tailwind.css';
 import './assets/css/main.css';
-import i18n from './includes/i18n';
 import './registerServiceWorker';
+import 'nprogress/nprogress.css';
+
+ProgressBar(router);
 
 let app;
 
@@ -19,6 +24,7 @@ auth.onAuthStateChanged(() => {
       .use(i18n)
       .use(store)
       .use(VeeValidatePlugin)
+      .use(GlobalComponents)
       .use(router);
     app.directive('icon', Icon);
     app.mount('#app');

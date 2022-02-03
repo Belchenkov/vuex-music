@@ -79,7 +79,7 @@ export default {
             name: file.name,
             variant: 'bg-red-400',
             icon: 'fas fa-times',
-            text_class: ''
+            text_class: '',
           });
           return false;
         }

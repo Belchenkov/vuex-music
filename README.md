@@ -2,6 +2,11 @@
 
 > Build an app "Vuex Music" on (Vue3, TailwindCSS, SASS, Firebase, Jest, Cypress, Vercel, Vuex, i18n, PWA)
 
+### [Demo](https://vuex-music-ab.vercel.app)
+
+### Preview
+![screenshot](./screen.png)
+
 ## Project setup
 ```
 npm install
@@ -31,6 +36,3 @@ npm run test:e2e
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
