@@ -1,6 +1,9 @@
 <template>
-  <li class="flex justify-between items-center p-3 pl-6 cursor-pointer transition
-          duration-300 hover:bg-gray-50">
+  <li
+    class="flex justify-between items-center p-3 pl-6 cursor-pointer transition
+          duration-300 hover:bg-gray-50"
+    :id="`song-id-${song.docID}`"
+  >
     <div>
       <router-link
         :to="{ name: 'song', params: { id: song.docID } }"
